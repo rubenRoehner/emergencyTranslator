@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.ui.screens.settings
+package com.example.emergencytranslator.ui.screens.history
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
@@ -7,14 +7,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel) {
+fun HistoryScreen(viewModel: HistoryViewModel) {
     val uiState by viewModel.uiState.collectAsState()
-    SettingsContent(uiState = uiState)
+    HistoryContent(uiState = uiState)
 }
 
 @Composable
-private fun SettingsContent(uiState: SettingsUiState) {
+private fun HistoryContent(uiState: HistoryUiState) {
     Column {
-        Text(text = "Settings Screen")
+        Text(text = "History Screen")
     }
 }
