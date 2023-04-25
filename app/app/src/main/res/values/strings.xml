@@ -3,4 +3,11 @@
     <string name="translator">Translator</string>
     <string name="history">History</string>
     <string name="settings">Settings</string>
+
+    <!-- ERROR -->
+    <string name="error_general">An error occurred!</string>
+    <string name="error_download_model">An error occurred while downloading the translation data!</string>
+    <string name="error_translating">An error occurred while translating!</string>
+    <string name="error_audio_permission">Audio permission needs to be granted in order to transcribe</string>
+    <string name="error_transcribing">An error occurred while transcribing!</string>
 </resources>

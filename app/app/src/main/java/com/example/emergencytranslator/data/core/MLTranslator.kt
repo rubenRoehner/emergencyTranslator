@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.data
+package com.example.emergencytranslator.data.core
 
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
@@ -33,6 +33,7 @@ class MLTranslator {
     }
 
     suspend fun translate(text: String): String {
+        Logger.debug("Translating")
         return try {
             translator.translate(text).await()
         } catch (e: Exception) {
@@ -42,10 +43,6 @@ class MLTranslator {
     }
 
     fun close() {
-        this.translator.close()
+        translator.close()
     }
-}
-
-enum class MLKitModelStatus {
-    NotDownloaded, Downloaded, CheckingDownload, Downloading
 }

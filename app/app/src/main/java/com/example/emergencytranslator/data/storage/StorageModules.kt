@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.data
+package com.example.emergencytranslator.data.storage
 
 import android.content.Context
 import dagger.Module
@@ -18,11 +18,5 @@ object StorageModules {
         @ApplicationContext context: Context
     ): DataStoreHelper {
         return DataStoreHelper(context = context)
-    }
-
-    @Singleton
-    @Provides
-    fun providesMLTranslator(): MLTranslator {
-        return MLTranslator()
     }
 }

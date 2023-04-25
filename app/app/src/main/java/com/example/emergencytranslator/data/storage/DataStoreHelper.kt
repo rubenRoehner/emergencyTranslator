@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.data
+package com.example.emergencytranslator.data.storage
 
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey

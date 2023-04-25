@@ -1,7 +1,7 @@
 package com.example.emergencytranslator.ui.screens.settings
 
 import androidx.lifecycle.ViewModel
-import com.example.emergencytranslator.data.DataStoreHelper
+import com.example.emergencytranslator.data.storage.DataStoreHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
