@@ -19,4 +19,10 @@ object StorageModules {
     ): DataStoreHelper {
         return DataStoreHelper(context = context)
     }
+
+    @Singleton
+    @Provides
+    fun providesMLTranslator(): MLTranslator {
+        return MLTranslator()
+    }
 }

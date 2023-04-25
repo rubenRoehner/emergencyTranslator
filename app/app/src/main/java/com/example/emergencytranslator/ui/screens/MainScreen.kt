@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -49,13 +48,13 @@ fun MainScreen() {
         Box(modifier = Modifier.padding(it)) {
             NavHost(navController = navController, Screen.Translator.route) {
                 composable(Screen.Translator.route) {
-                    TranslatorScreen(viewModel = viewModel())
+                    TranslatorScreen(viewModel = hiltViewModel())
                 }
                 composable(Screen.Settings.route) {
                     SettingsScreen(viewModel = hiltViewModel())
                 }
                 composable(Screen.History.route) {
-                    HistoryScreen(viewModel = viewModel())
+                    HistoryScreen(viewModel = hiltViewModel())
                 }
             }
         }
@@ -72,7 +71,7 @@ private fun AppBar(currentScreen: Screen) {
 @Composable
 private fun NavBar(navController: NavController, currentDestination: NavDestination?) {
     val items = listOf(
-        Screen.Translator, Screen.History, Screen.Settings
+        Screen.History, Screen.Translator, Screen.Settings
     )
     BottomNavigation {
         items.forEach { screen ->
@@ -92,9 +91,9 @@ private fun NavBar(navController: NavController, currentDestination: NavDestinat
                             saveState = true
                         }
                         // Avoid multiple copies of the same destination when
-                        // reselecting the same item
+                        // re-selecting the same item
                         launchSingleTop = true
-                        // Restore state when reselecting a previously selected item
+                        // Restore state when re-selecting a previously selected item
                         restoreState = true
                     }
                 })
