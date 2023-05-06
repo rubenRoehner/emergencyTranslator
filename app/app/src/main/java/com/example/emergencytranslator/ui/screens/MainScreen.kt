@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -34,13 +34,8 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val currentScreen = getCurrentScreen(currentDestination?.route)
 
-    Scaffold(topBar = {
-        AppBar(
-            currentScreen = currentScreen
-        )
-    }, bottomBar = {
+    Scaffold(bottomBar = {
         NavBar(
             navController = navController, currentDestination = currentDestination
         )
@@ -62,24 +57,20 @@ fun MainScreen() {
 }
 
 @Composable
-private fun AppBar(currentScreen: Screen) {
-    TopAppBar {
-        Text(text = stringResource(id = currentScreen.title))
-    }
-}
-
-@Composable
 private fun NavBar(navController: NavController, currentDestination: NavDestination?) {
     val items = listOf(
         Screen.History, Screen.Translator, Screen.Settings
     )
     BottomNavigation {
         items.forEach { screen ->
-            BottomNavigationItem(icon = {
-                Icon(
-                    painterResource(id = screen.icon), contentDescription = null
-                )
-            },
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        painterResource(id = screen.icon), contentDescription = null
+                    )
+                },
+                selectedContentColor = MaterialTheme.colors.secondary,
+                unselectedContentColor = MaterialTheme.colors.onPrimary,
                 label = { Text(stringResource(screen.title)) },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
@@ -96,16 +87,9 @@ private fun NavBar(navController: NavController, currentDestination: NavDestinat
                         // Restore state when re-selecting a previously selected item
                         restoreState = true
                     }
-                })
+                },
+            )
         }
-    }
-}
-
-private fun getCurrentScreen(route: String?): Screen {
-    return when (route) {
-        Screen.History.route -> Screen.History
-        Screen.Settings.route -> Screen.Settings
-        else -> Screen.Translator
     }
 }
 

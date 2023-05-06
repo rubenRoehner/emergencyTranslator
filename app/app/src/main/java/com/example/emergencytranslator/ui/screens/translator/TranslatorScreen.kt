@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.FabPosition
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -28,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.R
 import com.example.emergencytranslator.ui.FullScreenDialog
+import com.example.emergencytranslator.ui.screens.translator.components.LanguageSelector
 import com.example.emergencytranslator.ui.screens.translator.components.ListeningView
 import com.example.emergencytranslator.ui.screens.translator.components.TranslatorInputTextField
 import com.example.emergencytranslator.ui.screens.translator.components.TranslatorOutputTextField
@@ -71,15 +71,21 @@ private fun TranslatorContent(
     HandlePermissions(setCanRecord = setCanRecord)
 
     Scaffold(
-        floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = {
-        },
         scaffoldState = scaffoldState
     ) {
+        LoadingDialog(present = uiState.isDownloading)
+        TranslatingDialog(present = uiState.isTranslating)
         Box(modifier = Modifier.padding(it)) {
-            Column {
-                LoadingDialog(present = uiState.isDownloading)
-                TranslatingDialog(present = uiState.isTranslating)
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                LanguageSelector(
+                    availableLanguages = listOf("German", "English"),
+                    onSourceItemSelected = {},
+                    onDestinationItemSelected = {}
+                )
                 TranslatorInputTextField(
                     modifier = Modifier.weight(1f),
                     value = uiState.inputText,
@@ -93,8 +99,7 @@ private fun TranslatorContent(
                                 stopListening()
                             }
                         }
-                    },
-                    isListening = uiState.isListening
+                    }
                 )
                 TranslatorOutputTextField(
                     modifier = Modifier.weight(1f),

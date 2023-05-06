@@ -1,31 +1,34 @@
 package com.example.emergencytranslator.ui.screens.translator.components
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.R
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TranslatorInputTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     onDone: (() -> Unit),
-    onRecordButtonClick: () -> Unit,
-    isListening: Boolean
+    onRecordButtonClick: () -> Unit
 ) {
     TranslatorTextField(
         modifier = modifier,
@@ -33,23 +36,8 @@ fun TranslatorInputTextField(
         onValueChange = onValueChange,
         readOnly = false,
         onDone = onDone,
-        trailingIcon = {
-            FloatingActionButton(onClick = onRecordButtonClick) {
-                AnimatedContent(targetState = isListening) {
-                    if (it) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.outline_stop_circle_24),
-                            contentDescription = "stop"
-                        )
-                    } else {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_mic_24),
-                            contentDescription = "mic"
-                        )
-                    }
-                }
-            }
-        },
+        onFabClick = onRecordButtonClick,
+        fabIcon = R.drawable.baseline_mic_24
     )
 }
 
@@ -63,11 +51,8 @@ fun TranslatorOutputTextField(
         onValueChange = { },
         readOnly = true,
         onDone = null,
-        trailingIcon = {
-            FloatingActionButton(onClick = onSpeakButtonClick) {
-                Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play")
-            }
-        },
+        onFabClick = onSpeakButtonClick,
+        fabIcon = R.drawable.baseline_play_arrow_24
     )
 }
 
@@ -78,22 +63,42 @@ fun TranslatorTextField(
     onValueChange: (String) -> Unit,
     readOnly: Boolean,
     onDone: (() -> Unit)?,
-    trailingIcon: @Composable (() -> Unit)? = null
+    onFabClick: () -> Unit,
+    @DrawableRes fabIcon: Int
 ) {
-    Box(modifier = modifier) {
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            readOnly = readOnly,
-            modifier = Modifier.fillMaxSize(),
-            singleLine = false,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = {
-                if (onDone != null) {
-                    onDone()
-                }
-            }),
-            trailingIcon = trailingIcon,
-        )
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .then(modifier),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colors.surface),
+        shape = RoundedCornerShape(6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Box(contentAlignment = Alignment.BottomEnd) {
+            OutlinedTextField(
+                value = value,
+                onValueChange = onValueChange,
+                readOnly = readOnly,
+                modifier = Modifier.fillMaxSize(),
+                singleLine = false,
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = {
+                    if (onDone != null) {
+                        onDone()
+                    }
+                }),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    backgroundColor = MaterialTheme.colors.surface
+                ),
+                shape = RoundedCornerShape(6.dp)
+            )
+            FloatingActionButton(
+                onClick = onFabClick,
+                modifier = Modifier.padding(bottom = 16.dp, end = 16.dp)
+            ) {
+                Icon(painter = painterResource(id = fabIcon), contentDescription = "")
+            }
+
+        }
     }
 }
