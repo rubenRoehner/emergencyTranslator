@@ -4,9 +4,9 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.emergencytranslator.R
-import com.example.emergencytranslator.data.core.MLTranslator
-import com.example.emergencytranslator.data.core.TTSModule
-import com.example.emergencytranslator.data.core.VoiceToTextRecognizer
+import com.example.emergencytranslator.data.core.translation.MLTranslator
+import com.example.emergencytranslator.data.core.tts.TTSModule
+import com.example.emergencytranslator.data.core.stt.VoiceToTextRecognizer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

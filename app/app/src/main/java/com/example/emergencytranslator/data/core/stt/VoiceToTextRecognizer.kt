@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.data.core
+package com.example.emergencytranslator.data.core.stt
 
 import android.app.Application
 import android.content.Intent

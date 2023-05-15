@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.data.core
+package com.example.emergencytranslator.data.core.translation
 
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
@@ -8,6 +8,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.tasks.await
 import org.tinylog.kotlin.Logger
 import java.lang.Exception
+import java.util.Locale
 
 @Singleton
 class MLTranslator {
@@ -19,12 +20,19 @@ class MLTranslator {
 
     private val translator = Translation.getClient(this.translatorOptions)
 
-    suspend fun checkIfModelIsDownloaded(): Boolean {
+    companion object {
+        val availableLanguages = TranslateLanguage.getAllLanguages().map { Locale(it) }
+    }
+
+    suspend fun checkIfModelIsDownloaded(options: TranslatorOptions = translatorOptions): Boolean {
         Logger.debug("Checking downloaded")
+        val translator = Translation.getClient(options)
         val downloadConditions = DownloadConditions.Builder()
             .build()
         return try {
+            Logger.debug("start download if needed")
             translator.downloadModelIfNeeded(downloadConditions).await()
+            Logger.debug("done downloading")
             true
         } catch (e: Exception) {
             Logger.error("Error while downloading model", e)

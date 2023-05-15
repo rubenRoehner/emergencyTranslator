@@ -2,8 +2,12 @@ buildscript {
     ext {
         compose_ui_version = '1.4.1'
     }
+    repositories {
+        google()
+    }
     dependencies {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.46'
+        classpath("com.google.android.gms:oss-licenses-plugin:0.10.6")
     }
 }
 

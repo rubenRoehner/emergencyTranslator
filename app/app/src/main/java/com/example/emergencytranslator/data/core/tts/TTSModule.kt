@@ -1,4 +1,4 @@
-package com.example.emergencytranslator.data.core
+package com.example.emergencytranslator.data.core.tts
 
 import android.content.Context
 import android.os.Bundle

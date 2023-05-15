@@ -2,6 +2,9 @@ package com.example.emergencytranslator.data.core
 
 import android.app.Application
 import android.content.Context
+import com.example.emergencytranslator.data.core.stt.VoiceToTextRecognizer
+import com.example.emergencytranslator.data.core.translation.MLTranslator
+import com.example.emergencytranslator.data.core.tts.TTSModule
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

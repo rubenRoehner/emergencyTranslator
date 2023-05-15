@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".EmergencyTranslatorApplication"
@@ -17,18 +18,32 @@
         <activity
             android:name=".ui.screens.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.EmergencyTranslator">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.EmergencyTranslator"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat"
+            tools:ignore="LockedOrientationActivity" />
     </application>
-
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
 
