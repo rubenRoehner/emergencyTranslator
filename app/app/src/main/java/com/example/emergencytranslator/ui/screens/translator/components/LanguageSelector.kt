@@ -23,15 +23,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import java.util.Locale
 
 @Composable
 fun LanguageSelector(
-    availableLanguages: List<String>,
-    onSourceItemSelected: (String) -> Unit,
-    onDestinationItemSelected: (String) -> Unit
+    availableLanguages: List<Locale>,
+    onSourceItemSelected: (Locale) -> Unit,
+    onTargetItemSelected: (Locale) -> Unit,
+    selectedSource: Locale?,
+    selectedTarget: Locale?
 ) {
-    var selectedSourceIndex by remember { mutableStateOf(0) }
-    var selectedDestinationIndex by remember { mutableStateOf(1) }
     Row(
         modifier = Modifier
             .background(MaterialTheme.colors.primary, RoundedCornerShape(50))
@@ -39,9 +40,11 @@ fun LanguageSelector(
         verticalAlignment = Alignment.CenterVertically
     ) {
         LanguageDropDown(
-            availableLanguages = availableLanguages,
-            selectedItem = selectedSourceIndex,
-            onItemSelected = { selectedSourceIndex = it },
+            availableLanguages = availableLanguages.filter { it != selectedTarget },
+            selectedItem = selectedSource,
+            onItemSelected = {
+                onSourceItemSelected(it)
+            },
         )
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
@@ -49,18 +52,18 @@ fun LanguageSelector(
             tint = MaterialTheme.colors.secondary
         )
         LanguageDropDown(
-            availableLanguages = availableLanguages,
-            selectedItem = selectedDestinationIndex,
-            onItemSelected = { selectedDestinationIndex = it },
+            availableLanguages = availableLanguages.filter { it != selectedSource },
+            selectedItem = selectedTarget,
+            onItemSelected = { onTargetItemSelected(it) },
         )
     }
 }
 
 @Composable
 private fun LanguageDropDown(
-    availableLanguages: List<String>,
-    selectedItem: Int,
-    onItemSelected: (Int) -> Unit,
+    availableLanguages: List<Locale>,
+    selectedItem: Locale?,
+    onItemSelected: (Locale) -> Unit,
 ) {
     var expanded by remember {
         mutableStateOf(false)
@@ -73,7 +76,7 @@ private fun LanguageDropDown(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = availableLanguages[selectedItem],
+                text = selectedItem?.displayLanguage ?: "None",
                 style = TextStyle(color = MaterialTheme.colors.onPrimary)
             )
             Icon(
@@ -83,16 +86,16 @@ private fun LanguageDropDown(
             )
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            availableLanguages.forEachIndexed { index, text ->
+            availableLanguages.forEachIndexed { index, item ->
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = text
+                            text = item.displayLanguage
                         )
                     },
                     onClick = {
                         expanded = false
-                        onItemSelected(index)
+                        onItemSelected(item)
                     },
                 )
             }

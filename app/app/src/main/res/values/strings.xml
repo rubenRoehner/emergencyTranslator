@@ -3,6 +3,8 @@
     <string name="translator">Translator</string>
     <string name="history">History</string>
     <string name="settings">Settings</string>
+    <string name="settings_download_translation">Download translation data</string>
+    <string name="settings_download_stt">Download speech-to-text models</string>
 
     <!-- ERROR -->
     <string name="error_general">An error occurred!</string>
@@ -10,4 +12,8 @@
     <string name="error_translating">An error occurred while translating!</string>
     <string name="error_audio_permission">Audio permission needs to be granted in order to transcribe</string>
     <string name="error_transcribing">An error occurred while transcribing!</string>
+
+    <!-- SETTINGS -->
+    <string name="settings_download_translation_subtitle">Choose a language from the list to download it\'s translation data</string>
+    <string name="settings_download_sst_subtitle">Choose a language from the list to download it\'s speech-to-text model</string>
 </resources>

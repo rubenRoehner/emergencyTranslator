@@ -1,49 +1,49 @@
 package com.example.emergencytranslator.data.core.translation
 
-import com.google.mlkit.common.model.DownloadConditions
-import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
 import javax.inject.Singleton
 import kotlinx.coroutines.tasks.await
 import org.tinylog.kotlin.Logger
 import java.lang.Exception
-import java.util.Locale
 
 @Singleton
 class MLTranslator {
 
-    private val translatorOptions = TranslatorOptions.Builder()
-        .setSourceLanguage(TranslateLanguage.GERMAN)
-        .setTargetLanguage(TranslateLanguage.ENGLISH)
-        .build()
+    private var sourceLanguage: String? = null
+    private var targetLanguage: String? = null
 
-    private val translator = Translation.getClient(this.translatorOptions)
+    private var translatorOptions: TranslatorOptions? = null
 
-    companion object {
-        val availableLanguages = TranslateLanguage.getAllLanguages().map { Locale(it) }
+    private var translator: Translator? = null
+
+    fun updateSourceLanguage(language: String) {
+        sourceLanguage = language
+        updateTranslator()
     }
 
-    suspend fun checkIfModelIsDownloaded(options: TranslatorOptions = translatorOptions): Boolean {
-        Logger.debug("Checking downloaded")
-        val translator = Translation.getClient(options)
-        val downloadConditions = DownloadConditions.Builder()
-            .build()
-        return try {
-            Logger.debug("start download if needed")
-            translator.downloadModelIfNeeded(downloadConditions).await()
-            Logger.debug("done downloading")
-            true
-        } catch (e: Exception) {
-            Logger.error("Error while downloading model", e)
-            false
+    fun updateTargetLanguage(language: String) {
+        targetLanguage = language
+        updateTranslator()
+    }
+
+    private fun updateTranslator() {
+        translator?.close()
+        if (sourceLanguage != null && targetLanguage != null) {
+            translatorOptions = TranslatorOptions.Builder()
+                .setSourceLanguage(sourceLanguage!!)
+                .setTargetLanguage(targetLanguage!!)
+                .build()
+
+            translator = translatorOptions?.let { Translation.getClient(it) }
         }
     }
 
     suspend fun translate(text: String): String {
         Logger.debug("Translating")
         return try {
-            translator.translate(text).await()
+            translator!!.translate(text).await()
         } catch (e: Exception) {
             Logger.error("Error while translating", e)
             ""
@@ -51,6 +51,6 @@ class MLTranslator {
     }
 
     fun close() {
-        translator.close()
+        translator?.close()
     }
 }

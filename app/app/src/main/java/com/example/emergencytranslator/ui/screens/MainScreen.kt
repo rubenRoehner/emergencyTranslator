@@ -24,9 +24,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.example.emergencytranslator.R
 import com.example.emergencytranslator.ui.screens.history.HistoryScreen
 import com.example.emergencytranslator.ui.screens.settings.SettingsScreen
+import com.example.emergencytranslator.ui.screens.settings.download.DownloadSSTDataScreen
+import com.example.emergencytranslator.ui.screens.settings.download.DownloadTranslationDataScreen
 import com.example.emergencytranslator.ui.screens.translator.TranslatorScreen
 
 @Composable
@@ -45,11 +48,32 @@ fun MainScreen() {
                 composable(Screen.Translator.route) {
                     TranslatorScreen(viewModel = hiltViewModel())
                 }
-                composable(Screen.Settings.route) {
-                    SettingsScreen(viewModel = hiltViewModel())
-                }
                 composable(Screen.History.route) {
                     HistoryScreen(viewModel = hiltViewModel())
+                }
+                navigation(
+                    startDestination = Screen.SettingsScreen.route,
+                    route = Screen.Settings.route
+                ) {
+                    composable(Screen.SettingsScreen.route) {
+                        SettingsScreen(
+                            viewModel = hiltViewModel(),
+                            onNavigateToDownloadSTTData = { navController.navigate(Screen.DownloadSTTData.route) },
+                            onNavigateToDownloadTranslateData = { navController.navigate(Screen.DownloadTranslationData.route) },
+                        )
+                    }
+                    composable(Screen.DownloadTranslationData.route) {
+                        DownloadTranslationDataScreen(
+                            viewModel = hiltViewModel(),
+                            popBackStack = { navController.popBackStack() },
+                        )
+                    }
+                    composable(Screen.DownloadSTTData.route) {
+                        DownloadSSTDataScreen(
+                            viewModel = hiltViewModel(),
+                            popBackStack = { navController.popBackStack() },
+                        )
+                    }
                 }
             }
         }
@@ -97,4 +121,12 @@ sealed class Screen(val route: String, @StringRes val title: Int, @DrawableRes v
     object Translator : Screen("translator", R.string.translator, R.drawable.baseline_translate_24)
     object History : Screen("history", R.string.history, R.drawable.baseline_history_24)
     object Settings : Screen("settings", R.string.settings, R.drawable.baseline_settings_24)
+    object SettingsScreen :
+        Screen("settings-screen", R.string.settings, R.drawable.baseline_settings_24)
+
+    object DownloadTranslationData :
+        Screen("download-translation", R.string.settings, R.drawable.baseline_settings_24)
+
+    object DownloadSTTData :
+        Screen("download-stt", R.string.settings, R.drawable.baseline_settings_24)
 }

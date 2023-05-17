@@ -7,25 +7,30 @@ import com.example.emergencytranslator.R
 import com.example.emergencytranslator.data.core.translation.MLTranslator
 import com.example.emergencytranslator.data.core.tts.TTSModule
 import com.example.emergencytranslator.data.core.stt.VoiceToTextRecognizer
+import com.example.emergencytranslator.data.core.translation.MLTranslatorService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class TranslatorViewModel @Inject constructor(
-    private val mlTranslator: MLTranslator, private val voiceToTextRecognizer: VoiceToTextRecognizer, private val ttsModule: TTSModule
+    private val mlTranslator: MLTranslator,
+    private val voiceToTextRecognizer: VoiceToTextRecognizer,
+    private val ttsModule: TTSModule
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(TranslatorUiState())
     val uiState: StateFlow<TranslatorUiState> = _uiState.asStateFlow()
 
+    private val mlTranslatorService = MLTranslatorService()
+
     init {
         viewModelScope.launch {
-            initModules()
-
+            initLanguages()
             voiceToTextRecognizer.state.collect { state ->
                 if (state.spokenText.isNotEmpty()) {
                     setInputText(state.spokenText)
@@ -41,17 +46,29 @@ class TranslatorViewModel @Inject constructor(
         }
     }
 
-    private suspend fun initModules() {
-        setIsDownloading(true)
-        initTranslator()
-        setIsDownloading(false)
+    suspend fun initLanguages() {
+        val availableLanguages = mlTranslatorService.updateDownloadedModels()
+        _uiState.update {
+            it.copy(
+                availableLanguages = availableLanguages,
+                sourceLanguage = availableLanguages.getOrNull(0),
+                targetLanguage = availableLanguages.getOrNull(1)
+            )
+        }
+        availableLanguages.getOrNull(0)?.let { onSourceLanguageSelected(it) }
+        availableLanguages.getOrNull(1)?.let { onTargetLanguageSelected(it) }
     }
 
-    private suspend fun initTranslator() {
-        val result = mlTranslator.checkIfModelIsDownloaded()
-        if (!result) {
-            setHasError(Error.Download)
-        }
+    fun onSourceLanguageSelected(language: Locale) {
+        _uiState.update { it.copy(sourceLanguage = language) }
+        mlTranslator.updateSourceLanguage(language.language)
+        startTranslate()
+    }
+
+    fun onTargetLanguageSelected(language: Locale) {
+        _uiState.update { it.copy(targetLanguage = language) }
+        mlTranslator.updateTargetLanguage(language.language)
+        startTranslate()
     }
 
     fun setInputText(text: String) {
@@ -76,10 +93,6 @@ class TranslatorViewModel @Inject constructor(
 
     private fun setOutputText(text: String) {
         _uiState.update { it.copy(outputText = text) }
-    }
-
-    private fun setIsDownloading(value: Boolean) {
-        _uiState.update { it.copy(isDownloading = value) }
     }
 
     private fun setHasError(error: Error) {
@@ -123,7 +136,7 @@ class TranslatorViewModel @Inject constructor(
     }
 
     enum class Error(@StringRes val message: Int) {
-        General(R.string.error_general), Download(R.string.error_download_model), Translating(R.string.error_translating), AudioPermission(
+        General(R.string.error_general), Translating(R.string.error_translating), AudioPermission(
             R.string.error_audio_permission
         ),
         Transcribing(R.string.error_transcribing)
@@ -132,12 +145,15 @@ class TranslatorViewModel @Inject constructor(
 
 data class TranslatorUiState(
     val hasError: TranslatorViewModel.Error? = null,
-    val isDownloading: Boolean = false,
     val inputText: String = "",
     val outputText: String = "",
 
     val canRecord: Boolean = false,
     val isListening: Boolean = false,
 
-    val isTranslating: Boolean = false
+    val isTranslating: Boolean = false,
+
+    val availableLanguages: List<Locale> = emptyList(),
+    val sourceLanguage: Locale? = null,
+    val targetLanguage: Locale? = null,
 )

@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -31,10 +29,17 @@ import com.example.emergencytranslator.ui.screens.translator.components.Language
 import com.example.emergencytranslator.ui.screens.translator.components.ListeningView
 import com.example.emergencytranslator.ui.screens.translator.components.TranslatorInputTextField
 import com.example.emergencytranslator.ui.screens.translator.components.TranslatorOutputTextField
+import java.util.Locale
 
 @Composable
 fun TranslatorScreen(viewModel: TranslatorViewModel) {
+
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.initLanguages()
+    }
+
     TranslatorContent(
         uiState = uiState,
         onInputTextChange = viewModel::setInputText,
@@ -43,7 +48,9 @@ fun TranslatorScreen(viewModel: TranslatorViewModel) {
         startListening = viewModel::startListening,
         stopListening = viewModel::stopListening,
         resetError = viewModel::resetError,
-        startSpeaking = viewModel::startSpeaking
+        startSpeaking = viewModel::startSpeaking,
+        onSourceLanguageSelected = viewModel::onSourceLanguageSelected,
+        onTargetLanguageSelected = viewModel::onTargetLanguageSelected
     )
 }
 
@@ -56,7 +63,9 @@ private fun TranslatorContent(
     startListening: () -> Unit,
     stopListening: () -> Unit,
     resetError: () -> Unit,
-    startSpeaking: () -> Unit
+    startSpeaking: () -> Unit,
+    onSourceLanguageSelected: (Locale) -> Unit,
+    onTargetLanguageSelected: (Locale) -> Unit
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
@@ -73,7 +82,6 @@ private fun TranslatorContent(
     Scaffold(
         scaffoldState = scaffoldState
     ) {
-        LoadingDialog(present = uiState.isDownloading)
         TranslatingDialog(present = uiState.isTranslating)
         Box(modifier = Modifier.padding(it)) {
             Column(
@@ -81,11 +89,6 @@ private fun TranslatorContent(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LanguageSelector(
-                    availableLanguages = listOf("German", "English"),
-                    onSourceItemSelected = {},
-                    onDestinationItemSelected = {}
-                )
                 TranslatorInputTextField(
                     modifier = Modifier.weight(1f),
                     value = uiState.inputText,
@@ -100,6 +103,13 @@ private fun TranslatorContent(
                             }
                         }
                     }
+                )
+                LanguageSelector(
+                    availableLanguages = uiState.availableLanguages,
+                    selectedSource = uiState.sourceLanguage,
+                    selectedTarget = uiState.targetLanguage,
+                    onSourceItemSelected = onSourceLanguageSelected,
+                    onTargetItemSelected = onTargetLanguageSelected,
                 )
                 TranslatorOutputTextField(
                     modifier = Modifier.weight(1f),
@@ -125,19 +135,6 @@ private fun HandlePermissions(setCanRecord: (Boolean) -> Unit) {
     LaunchedEffect(recordAudioLauncher) {
         // Launches the permission request
         recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
-    }
-}
-
-@Composable
-private fun LoadingDialog(present: Boolean) {
-    if (present) {
-        FullScreenDialog {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .size(100.dp)
-            )
-        }
     }
 }
 
