@@ -19,21 +19,21 @@ class DataStoreHelper @Inject constructor(
 ) {
 
     private object PreferencesKeys {
-        val IS_DARK_THEME = booleanPreferencesKey("pref_dark_theme")
+        val USE_DARK_THEME = booleanPreferencesKey("pref_dark_theme")
     }
 
-    val isDarkTheme: Flow<Boolean>
+    val useDarkTheme: Flow<Boolean>
         get() = context.dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.IS_DARK_THEME] ?: false
+            preferences[PreferencesKeys.USE_DARK_THEME] ?: true
         }
 
     suspend fun clearPreferenceStorage() {
         context.dataStore.edit { mutablePreferences -> mutablePreferences.clear() }
     }
 
-    suspend fun setIsDarkTheme(isDarkTheme: Boolean) {
+    suspend fun setUseDarkTheme(isDarkTheme: Boolean) {
         context.dataStore.edit { mutablePreferences ->
-            mutablePreferences[PreferencesKeys.IS_DARK_THEME] = isDarkTheme
+            mutablePreferences[PreferencesKeys.USE_DARK_THEME] = isDarkTheme
         }
     }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.EmergencyTranslator" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+    <style name="Theme.EmergencyTranslator" parent="Theme.AppCompat">
+        <item name="android:colorPrimary">@color/md_theme_light_primary</item>
+        <item name="android:colorPrimaryDark">@color/md_theme_dark_primary</item>
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="android:statusBarColor">@color/md_theme_dark_background</item>
     </style>
 </resources>

@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import java.util.Locale
 
@@ -35,12 +34,12 @@ fun LanguageSelector(
 ) {
     Row(
         modifier = Modifier
-            .background(MaterialTheme.colors.primary, RoundedCornerShape(50))
+            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(50))
             .padding(vertical = 8.dp, horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         LanguageDropDown(
-            availableLanguages = availableLanguages.filter { it != selectedTarget },
+            availableLanguages = availableLanguages,
             selectedItem = selectedSource,
             onItemSelected = {
                 onSourceItemSelected(it)
@@ -49,7 +48,7 @@ fun LanguageSelector(
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = "",
-            tint = MaterialTheme.colors.secondary
+            tint = MaterialTheme.colorScheme.onPrimary
         )
         LanguageDropDown(
             availableLanguages = availableLanguages.filter { it != selectedSource },
@@ -77,16 +76,16 @@ private fun LanguageDropDown(
         ) {
             Text(
                 text = selectedItem?.displayLanguage ?: "None",
-                style = TextStyle(color = MaterialTheme.colors.onPrimary)
+                color = MaterialTheme.colorScheme.onPrimary
             )
             Icon(
                 imageVector = Icons.Filled.ArrowDropDown,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onPrimary
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            availableLanguages.forEachIndexed { index, item ->
+            availableLanguages.forEach { item ->
                 DropdownMenuItem(
                     text = {
                         Text(

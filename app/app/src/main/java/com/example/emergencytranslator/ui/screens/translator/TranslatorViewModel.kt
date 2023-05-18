@@ -36,12 +36,8 @@ class TranslatorViewModel @Inject constructor(
                     setInputText(state.spokenText)
                     startTranslate()
                 }
-                _uiState.update {
-                    it.copy(
-                        isListening = state.isListening,
-                        hasError = if (state.error != null) Error.Transcribing else it.hasError
-                    )
-                }
+                _uiState.update { it.copy(isListening = state.isListening) }
+                state.error?.run { setHasError(Error.Transcribing) }
             }
         }
     }
@@ -61,6 +57,9 @@ class TranslatorViewModel @Inject constructor(
 
     fun onSourceLanguageSelected(language: Locale) {
         _uiState.update { it.copy(sourceLanguage = language) }
+        if (_uiState.value.targetLanguage == language) {
+            _uiState.update { it.copy(targetLanguage = null) }
+        }
         mlTranslator.updateSourceLanguage(language.language)
         startTranslate()
     }
@@ -76,10 +75,9 @@ class TranslatorViewModel @Inject constructor(
     }
 
     fun setCanRecord(value: Boolean) {
-        _uiState.update {
-            it.copy(
-                canRecord = value, hasError = if (!value) Error.AudioPermission else it.hasError
-            )
+        _uiState.update { it.copy(canRecord = value) }
+        if (!value) {
+            setHasError(Error.AudioPermission)
         }
     }
 

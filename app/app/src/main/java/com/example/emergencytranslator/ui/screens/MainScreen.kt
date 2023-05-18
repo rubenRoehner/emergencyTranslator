@@ -4,12 +4,17 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -32,16 +37,37 @@ import com.example.emergencytranslator.ui.screens.settings.download.DownloadSSTD
 import com.example.emergencytranslator.ui.screens.settings.download.DownloadTranslationDataScreen
 import com.example.emergencytranslator.ui.screens.translator.TranslatorScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    val currentScreen: Screen? = getCurrentScreen(currentDestination?.route)
 
     Scaffold(bottomBar = {
         NavBar(
             navController = navController, currentDestination = currentDestination
         )
+    }, topBar = {
+        TopAppBar(title = {
+            Text(
+                text = stringResource(id = currentScreen?.title ?: R.string.app_name),
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }, navigationIcon = {
+            if (showBackButton(currentDestination?.route)) {
+                IconButton(
+                    onClick = { navController.popBackStack() },
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack, contentDescription = ""
+                        )
+                    },
+                )
+            }
+        })
     }) {
         Box(modifier = Modifier.padding(it)) {
             NavHost(navController = navController, Screen.Translator.route) {
@@ -52,8 +78,7 @@ fun MainScreen() {
                     HistoryScreen(viewModel = hiltViewModel())
                 }
                 navigation(
-                    startDestination = Screen.SettingsScreen.route,
-                    route = Screen.Settings.route
+                    startDestination = Screen.SettingsScreen.route, route = Screen.Settings.route
                 ) {
                     composable(Screen.SettingsScreen.route) {
                         SettingsScreen(
@@ -64,14 +89,12 @@ fun MainScreen() {
                     }
                     composable(Screen.DownloadTranslationData.route) {
                         DownloadTranslationDataScreen(
-                            viewModel = hiltViewModel(),
-                            popBackStack = { navController.popBackStack() },
+                            viewModel = hiltViewModel()
                         )
                     }
                     composable(Screen.DownloadSTTData.route) {
                         DownloadSSTDataScreen(
-                            viewModel = hiltViewModel(),
-                            popBackStack = { navController.popBackStack() },
+                            viewModel = hiltViewModel()
                         )
                     }
                 }
@@ -85,16 +108,14 @@ private fun NavBar(navController: NavController, currentDestination: NavDestinat
     val items = listOf(
         Screen.History, Screen.Translator, Screen.Settings
     )
-    BottomNavigation {
+    NavigationBar {
         items.forEach { screen ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = {
                     Icon(
                         painterResource(id = screen.icon), contentDescription = null
                     )
                 },
-                selectedContentColor = MaterialTheme.colors.secondary,
-                unselectedContentColor = MaterialTheme.colors.onPrimary,
                 label = { Text(stringResource(screen.title)) },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 onClick = {
@@ -117,6 +138,25 @@ private fun NavBar(navController: NavController, currentDestination: NavDestinat
     }
 }
 
+private fun getCurrentScreen(route: String?): Screen? {
+    return when (route) {
+        Screen.Translator.route -> Screen.Translator
+        Screen.History.route -> Screen.History
+        Screen.SettingsScreen.route -> Screen.SettingsScreen
+        Screen.DownloadSTTData.route -> Screen.DownloadSTTData
+        Screen.DownloadTranslationData.route -> Screen.DownloadTranslationData
+        else -> null
+    }
+}
+
+private fun showBackButton(route: String?): Boolean {
+    return when (route) {
+        Screen.DownloadTranslationData.route -> true
+        Screen.DownloadSTTData.route -> true
+        else -> false
+    }
+}
+
 sealed class Screen(val route: String, @StringRes val title: Int, @DrawableRes val icon: Int) {
     object Translator : Screen("translator", R.string.translator, R.drawable.baseline_translate_24)
     object History : Screen("history", R.string.history, R.drawable.baseline_history_24)
@@ -124,9 +164,12 @@ sealed class Screen(val route: String, @StringRes val title: Int, @DrawableRes v
     object SettingsScreen :
         Screen("settings-screen", R.string.settings, R.drawable.baseline_settings_24)
 
-    object DownloadTranslationData :
-        Screen("download-translation", R.string.settings, R.drawable.baseline_settings_24)
+    object DownloadTranslationData : Screen(
+        "download-translation",
+        R.string.settings_download_translation,
+        R.drawable.baseline_settings_24
+    )
 
     object DownloadSTTData :
-        Screen("download-stt", R.string.settings, R.drawable.baseline_settings_24)
+        Screen("download-stt", R.string.settings_download_stt, R.drawable.baseline_settings_24)
 }

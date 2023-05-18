@@ -89,7 +89,8 @@ class VoiceToTextRecognizer(private val application: Application) : RecognitionL
         Logger.error("SpeechRecognizer error: $error")
         _state.update {
             it.copy(
-                error = "Error: $error"
+                error = "Error: $error",
+                isListening = false
             )
         }
     }

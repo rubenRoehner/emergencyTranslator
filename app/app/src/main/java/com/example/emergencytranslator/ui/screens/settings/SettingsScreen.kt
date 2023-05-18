@@ -3,17 +3,12 @@ package com.example.emergencytranslator.ui.screens.settings
 import android.content.Intent
 import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.BuildConfig
 import com.example.emergencytranslator.R
 import com.example.emergencytranslator.ui.screens.settings.components.PreferenceCategory
@@ -46,12 +41,6 @@ private fun SettingsContent(
 ) {
     val context = LocalContext.current
     Column {
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = "Settings",
-            style = MaterialTheme.typography.h5,
-            color = MaterialTheme.colors.primary
-        )
         PreferenceCategory(title = "General")
         SwitchPreference(
             title = "dark mode",
