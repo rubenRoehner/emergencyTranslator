@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.R
@@ -37,7 +38,7 @@ fun TranslatorInputTextField(
         onDone = onDone,
         onFabClick = onRecordButtonClick,
         fabIcon = R.drawable.baseline_mic_24,
-        label = "Input"
+        label = stringResource(id = R.string.translator_input)
     )
 }
 
@@ -53,7 +54,7 @@ fun TranslatorOutputTextField(
         onDone = null,
         onFabClick = onSpeakButtonClick,
         fabIcon = R.drawable.baseline_play_arrow_24,
-        label = "Output"
+        label = stringResource(id = R.string.translator_output)
     )
 }
 

@@ -3,10 +3,13 @@ package com.example.emergencytranslator.ui.screens.settings
 import android.content.Intent
 import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.emergencytranslator.BuildConfig
@@ -40,40 +43,46 @@ private fun SettingsContent(
     onNavigateToDownloadTranslateData: () -> Unit
 ) {
     val context = LocalContext.current
-    Column {
-        PreferenceCategory(title = "General")
+    val scrollState = rememberScrollState()
+
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
+        PreferenceCategory(title = stringResource(id = R.string.settings_general))
         SwitchPreference(
-            title = "dark mode",
-            subtitle = "Enable to use dark mode",
+            title = stringResource(id = R.string.settings_general_darkMode),
+            subtitle = stringResource(id = R.string.settings_general_darkMode_subtitle),
             checked = uiState.useDarkMode,
             onCheckedChange = setDarkMode
         )
         Divider()
-        PreferenceCategory(title = "Download offline data")
+        PreferenceCategory(title = stringResource(id = R.string.settings_download))
         RegularPreference(
-            title = "Translation",
+            title = stringResource(id = R.string.settings_download_translation),
             subtitle = stringResource(id = R.string.settings_download_translation_subtitle),
             onClick = onNavigateToDownloadTranslateData
         )
         RegularPreference(
-            title = "Speech to text",
+            title = stringResource(id = R.string.settings_download_stt),
             subtitle = stringResource(id = R.string.settings_download_sst_subtitle),
             onClick = onNavigateToDownloadSTTData
         )
-        RegularPreference(title = "Text to speech", subtitle = "", onClick = {
-            val intent = Intent()
-            intent.action = TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA
-            context.startActivity(intent)
-        })
+        RegularPreference(title = stringResource(id = R.string.settings_download_tts),
+            subtitle = stringResource(
+                id = R.string.settings_download_tts_subtitle
+            ),
+            onClick = {
+                val intent = Intent()
+                intent.action = TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA
+                context.startActivity(intent)
+            })
         Divider()
-        PreferenceCategory(title = "Info")
+        PreferenceCategory(title = stringResource(id = R.string.settings_info))
         RegularPreference(
-            title = "App-version",
+            title = stringResource(id = R.string.settings_info_version),
             subtitle = BuildConfig.VERSION_NAME,
             onClick = { /*TODO*/ })
         RegularPreference(
-            title = "Open source licences",
-            subtitle = "List of all used open source licences",
+            title = stringResource(id = R.string.settings_info_oss),
+            subtitle = stringResource(id = R.string.settings_info_oss_subtitle),
             onClick = {
                 context.startActivity(
                     Intent(context, OssLicensesMenuActivity::class.java)

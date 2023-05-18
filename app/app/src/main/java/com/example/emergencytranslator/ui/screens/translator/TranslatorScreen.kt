@@ -3,17 +3,15 @@ package com.example.emergencytranslator.ui.screens.translator
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,14 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.emergencytranslator.R
-import com.example.emergencytranslator.ui.FullScreenDialog
+import com.example.emergencytranslator.ui.dialogs.ListeningDialog
+import com.example.emergencytranslator.ui.dialogs.TranslatingDialog
 import com.example.emergencytranslator.ui.screens.translator.components.LanguageSelector
-import com.example.emergencytranslator.ui.screens.translator.components.ListeningView
 import com.example.emergencytranslator.ui.screens.translator.components.TranslatorInputTextField
 import com.example.emergencytranslator.ui.screens.translator.components.TranslatorOutputTextField
 import java.util.Locale
@@ -82,9 +77,18 @@ private fun TranslatorContent(
     HandlePermissions(setCanRecord = setCanRecord)
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) {
+                Snackbar(
+                    snackbarData = it,
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+        }
     ) {
         TranslatingDialog(present = uiState.isTranslating)
+        ListeningDialog(present = uiState.isListening)
         Box(modifier = Modifier.padding(it)) {
             Column(
                 modifier = Modifier
@@ -121,7 +125,6 @@ private fun TranslatorContent(
                     onSpeakButtonClick = startSpeaking
                 )
             }
-            ListeningView(present = uiState.isListening)
         }
     }
 
@@ -139,26 +142,5 @@ private fun HandlePermissions(setCanRecord: (Boolean) -> Unit) {
     LaunchedEffect(recordAudioLauncher) {
         // Launches the permission request
         recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
-    }
-}
-
-@Composable
-private fun TranslatingDialog(present: Boolean) {
-    if (present) {
-        FullScreenDialog {
-            Column(
-                modifier = Modifier
-                    .background(Color.White)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_translate_24),
-                    contentDescription = "translate"
-                )
-                Text("Translating...")
-            }
-        }
     }
 }

@@ -1,10 +1,41 @@
 <resources>
+    <!-- GENERAL -->
     <string name="app_name">EmergencyTranslator</string>
+    <string name="not_implemented">This feature is not implemented yet!</string>
+    <string name="none">none</string>
+
+    <!-- TRANSLATOR -->
     <string name="translator">Translator</string>
+    <string name="translator_input">Input</string>
+    <string name="translator_output">Output</string>
+
+    <!-- HISTORY -->
     <string name="history">History</string>
+
+    <!-- SETTINGS -->
     <string name="settings">Settings</string>
+
+    <string name="settings_general">General</string>
+    <string name="settings_general_darkMode">dark mode</string>
+    <string name="settings_general_darkMode_subtitle">Enable to use dark mode</string>
+
+    <string name="settings_download">Download</string>
     <string name="settings_download_translation">Download translation data</string>
+    <string name="settings_download_translation_subtitle">Choose a language from the list to download it\'s translation data</string>
     <string name="settings_download_stt">Download speech-to-text models</string>
+    <string name="settings_download_sst_subtitle">Choose a language from the list to download it\'s speech-to-text model</string>
+    <string name="settings_download_tts">Download text-to-speech models</string>
+    <string name="settings_download_tts_subtitle">Choose a language from the list to download it\'s text-to-speech data</string>
+
+    <string name="settings_info">Info</string>
+    <string name="settings_info_version">App-version</string>
+    <string name="settings_info_oss">Open source notices</string>
+    <string name="settings_info_oss_subtitle">List of open source libraries that are compiled into the app</string>
+
+    <!-- DIALOGS-->
+    <string name="dialogs_downloading">Downloading</string>
+    <string name="dialogs_translating">Translating</string>
+    <string name="dialogs_listening">Listening</string>
 
     <!-- ERROR -->
     <string name="error_general">An error occurred!</string>
@@ -12,8 +43,4 @@
     <string name="error_translating">An error occurred while translating!</string>
     <string name="error_audio_permission">Audio permission needs to be granted in order to transcribe</string>
     <string name="error_transcribing">An error occurred while transcribing!</string>
-
-    <!-- SETTINGS -->
-    <string name="settings_download_translation_subtitle">Choose a language from the list to download it\'s translation data</string>
-    <string name="settings_download_sst_subtitle">Choose a language from the list to download it\'s speech-to-text model</string>
 </resources>

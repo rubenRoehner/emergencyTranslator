@@ -3,18 +3,17 @@ package com.example.emergencytranslator.ui.screens.settings.download
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -28,7 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.R
-import com.example.emergencytranslator.ui.FullScreenDialog
+import com.example.emergencytranslator.ui.dialogs.LoadingDialog
 import java.util.Locale
 
 @Composable
@@ -72,7 +71,15 @@ private fun DownloadLanguageDataContent(
         }
     }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) {
+                Snackbar(
+                    snackbarData = it,
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+        }
     ) {
         LoadingDialog(present = uiState.isDownloading)
         LazyColumn(modifier = Modifier.padding(it)) {
@@ -88,7 +95,8 @@ private fun DownloadLanguageDataContent(
                             content = {
                                 Icon(
                                     painter = painterResource(id = R.drawable.baseline_download_done_24),
-                                    contentDescription = "download done"
+                                    contentDescription = "download done",
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             },
                         )
@@ -107,7 +115,8 @@ private fun DownloadLanguageDataContent(
                             content = {
                                 Icon(
                                     painter = painterResource(id = R.drawable.baseline_download_24),
-                                    contentDescription = "download"
+                                    contentDescription = "download",
+                                    tint = MaterialTheme.colorScheme.tertiary
                                 )
                             },
                         )
@@ -122,8 +131,10 @@ private fun DownloadLanguageDataContent(
 private fun SectionHeader(title: String) {
     Box(
         modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .padding(horizontal = 8.dp, vertical = 4.dp)
             .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.primary)
+            .background(color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(6.dp))
             .padding(8.dp)
     ) {
         Text(
@@ -131,21 +142,5 @@ private fun SectionHeader(title: String) {
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimary
         )
-    }
-}
-
-@Composable
-fun LoadingDialog(present: Boolean) {
-    if (present) {
-        FullScreenDialog {
-            Column {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .size(100.dp)
-                )
-                Text(text = "Downloading...")
-            }
-        }
     }
 }
