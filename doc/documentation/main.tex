@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage[german]{babel}
+\usepackage[export]{adjustbox}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{titlesec}
+% Set page size and margins
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\author{Benjamin Schön, Ruben Röhner}
+
+\begin{document}
+    \include{pages/titlePage}
+    \include{pages/workInProgress}
+    \include{pages/abstract}
+    \include{pages/independence}
+    \include{pages/tableOfContents}
+        \include{pages/introduction}
+        \include{pages/requirements}
+        \include{pages/stateOfTheArt}
+        \include{pages/implementation}
+        \include{pages/evaluation}
+        \include{pages/conclusion}
+    \listoffigures
+\end{document}
