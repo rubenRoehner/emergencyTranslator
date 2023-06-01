@@ -26,7 +26,7 @@ fun TranslatingDialog(present: Boolean) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.undraw_around_the_world),
-                    contentDescription = "History list",
+                    contentDescription = "",
                     modifier = Modifier
                         .aspectRatio(1f)
                         .background(

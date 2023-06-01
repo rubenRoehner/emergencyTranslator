@@ -16,6 +16,7 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -72,7 +73,7 @@ private fun HistoryContent(uiState: HistoryUiState, resetError: () -> Unit) {
                 modifier = Modifier
                     .background(
                         shape = RoundedCornerShape(50),
-                        color = MaterialTheme.colorScheme.surfaceVariant
+                        color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
                     )
                     .padding(LocalConfiguration.current.screenWidthDp.dp / 10)
                     .size(LocalConfiguration.current.screenWidthDp.dp / 2)

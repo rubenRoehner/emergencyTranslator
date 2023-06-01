@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,10 +90,10 @@ fun TranslatorTextField(
             shape = RoundedCornerShape(6.dp),
             label = { Text(text = label) },
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                errorContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+                errorContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
 
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
