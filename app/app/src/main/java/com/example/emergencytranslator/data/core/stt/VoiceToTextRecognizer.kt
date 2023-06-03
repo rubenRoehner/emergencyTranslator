@@ -16,14 +16,18 @@ import javax.inject.Singleton
 @Singleton
 class VoiceToTextRecognizer(private val application: Application) : RecognitionListener {
 
+/*
     private val _state = MutableStateFlow(VoiceToTextRecognizerState())
 
     val state: StateFlow<VoiceToTextRecognizerState>
         get() = _state.asStateFlow()
 
     private val recognizer = SpeechRecognizer.createSpeechRecognizer(application)
+    */
+
 
     fun startListening(languageCode: String = "de") {
+        /*
         Logger.debug("Start Listening")
         _state.update { VoiceToTextRecognizerState() }
 
@@ -52,7 +56,7 @@ class VoiceToTextRecognizer(private val application: Application) : RecognitionL
                 isListening = true
             )
         }
-
+        */
     }
 
     fun stopListening() {

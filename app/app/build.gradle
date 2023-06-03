@@ -119,6 +119,9 @@ dependencies {
     // open source notices
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 
+    //Vosk
+    implementation group: 'com.alphacephei', name: 'vosk-android', version: '0.3.32'
+
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
             because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
