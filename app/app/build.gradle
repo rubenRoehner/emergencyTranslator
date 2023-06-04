@@ -120,7 +120,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 
     //Vosk
-    implementation group: 'com.alphacephei', name: 'vosk-android', version: '0.3.32'
+    implementation group: 'com.alphacephei', name: 'vosk-android', version: '0.3.47'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'net.java.dev.jna:jna:5.13.0@aar'
+    implementation 'com.alphacephei:vosk-android:0.3.47@aar'
+    implementation project(':models')
+
 
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
