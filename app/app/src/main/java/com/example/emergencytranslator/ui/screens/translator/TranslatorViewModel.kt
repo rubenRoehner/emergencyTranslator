@@ -1,5 +1,6 @@
 package com.example.emergencytranslator.ui.screens.translator
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,13 +35,15 @@ class TranslatorViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             initLanguages()
-            voiceToTextRecognizer.state.collect { state ->
-                if (state.spokenText.isNotEmpty()) {
-                    setInputText(state.spokenText)
+            voiceToTextRecognizer.initModel()
+
+            voiceToTextRecognizer.infos.collect { infos ->
+                if (infos.spokenText.isNotEmpty()) {
+                    setInputText(infos.spokenText)
                     startTranslate()
                 }
-                _uiState.update { it.copy(isListening = state.isListening) }
-                state.error?.run { setHasError(Error.Transcribing) }
+                _uiState.update { it.copy(isListening = (infos.state == VoiceToTextRecognizer.VoiceToTextRecognizerState.STATE_MIC))} //TODO: use state in ui too
+                infos.error?.run { setHasError(Error.Transcribing) }
             }
         }
     }
@@ -91,7 +94,8 @@ class TranslatorViewModel @Inject constructor(
     }
 
     fun startListening() {
-        voiceToTextRecognizer.startListening()
+        Log.i("startListening", "started to Listen")
+        voiceToTextRecognizer.startListening() //TODO: LanguageCode
     }
 
     fun stopListening() {
@@ -158,7 +162,7 @@ class TranslatorViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         mlTranslator.close()
-        voiceToTextRecognizer.destroy()
+        //voiceToTextRecognizer.destroy()
         ttsModule.onDestroy()
     }
 
