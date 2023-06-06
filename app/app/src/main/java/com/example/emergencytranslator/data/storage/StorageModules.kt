@@ -1,6 +1,8 @@
 package com.example.emergencytranslator.data.storage
 
 import android.content.Context
+import androidx.room.Room
+import com.example.emergencytranslator.data.storage.daos.HistoryItemDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +20,20 @@ object StorageModules {
         @ApplicationContext context: Context
     ): DataStoreHelper {
         return DataStoreHelper(context = context)
+    }
+
+    @Provides
+    fun providesHistoryItemDao(database: HistoryDatabase): HistoryItemDao {
+        return database.historyItemDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideHistoryDatabase(@ApplicationContext appContext: Context): HistoryDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            HistoryDatabase::class.java,
+            "HistoryDatabase"
+        ).build()
     }
 }

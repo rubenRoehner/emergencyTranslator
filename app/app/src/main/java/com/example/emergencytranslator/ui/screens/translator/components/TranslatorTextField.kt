@@ -12,13 +12,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.R
@@ -38,8 +36,7 @@ fun TranslatorInputTextField(
         readOnly = false,
         onDone = onDone,
         onFabClick = onRecordButtonClick,
-        fabIcon = R.drawable.baseline_mic_24,
-        label = stringResource(id = R.string.translator_input)
+        fabIcon = R.drawable.baseline_mic_24
     )
 }
 
@@ -54,8 +51,7 @@ fun TranslatorOutputTextField(
         readOnly = true,
         onDone = null,
         onFabClick = onSpeakButtonClick,
-        fabIcon = R.drawable.baseline_play_arrow_24,
-        label = stringResource(id = R.string.translator_output)
+        fabIcon = R.drawable.baseline_play_arrow_24
     )
 }
 
@@ -67,13 +63,10 @@ fun TranslatorTextField(
     readOnly: Boolean,
     onDone: (() -> Unit)?,
     onFabClick: () -> Unit,
-    @DrawableRes fabIcon: Int,
-    label: String
+    @DrawableRes fabIcon: Int
 ) {
     Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .then(modifier), contentAlignment = Alignment.BottomEnd
+        modifier = modifier, contentAlignment = Alignment.BottomEnd
     ) {
         OutlinedTextField(
             value = value,
@@ -88,7 +81,6 @@ fun TranslatorTextField(
                 }
             }),
             shape = RoundedCornerShape(6.dp),
-            label = { Text(text = label) },
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
                 focusedContainerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),

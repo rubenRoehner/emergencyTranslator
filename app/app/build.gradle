@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.emergencytranslator"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -52,15 +52,15 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     implementation platform('androidx.compose:compose-bom:2022.10.00')
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
-    implementation 'androidx.compose.material:material:1.4.2'
+    implementation "androidx.compose.material:material:$compose_ui_version"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -70,7 +70,7 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
     // jetpack compose
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.compose.ui:ui:$compose_ui_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
     implementation 'androidx.compose.material:material:1.4.1'
@@ -81,26 +81,24 @@ dependencies {
 
     implementation "androidx.compose.material3:material3:1.1.0"
 
-
     // accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
 
     //Dagger
-    implementation 'com.google.dagger:dagger:2.46'
+    implementation "com.google.dagger:dagger:$hilt_dagger_version"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    kapt 'com.google.dagger:dagger-compiler:2.46'
+    kapt "com.google.dagger:dagger-compiler:$hilt_dagger_version"
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.46'
-    kapt 'com.google.dagger:hilt-compiler:2.46'
-    // Hilt - For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.46'
-    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46'
-    // Hilt - For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.46'
-    kaptTest 'com.google.dagger:hilt-compiler:2.46'
+    implementation "com.google.dagger:hilt-android:$hilt_dagger_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_dagger_version"
 
     // storage
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // testing
     testImplementation 'junit:junit:4.13.2'
@@ -114,7 +112,7 @@ dependencies {
     implementation 'org.tinylog:tinylog-api-kotlin:2.6.1'
     implementation 'org.tinylog:tinylog-impl:2.6.1'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 
     // open source notices
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'

@@ -6,11 +6,10 @@
 
     <!-- TRANSLATOR -->
     <string name="translator">Translator</string>
-    <string name="translator_input">Input</string>
-    <string name="translator_output">Output</string>
 
     <!-- HISTORY -->
     <string name="history">History</string>
+    <string name="history_empty">Your history is empty! After translating your history will appear here.</string>
 
     <!-- SETTINGS -->
     <string name="settings">Settings</string>
@@ -43,4 +42,5 @@
     <string name="error_translating">An error occurred while translating!</string>
     <string name="error_audio_permission">Audio permission needs to be granted in order to transcribe</string>
     <string name="error_transcribing">An error occurred while transcribing!</string>
+    <string name="error_deleting">An error occurred while deleting!</string>
 </resources>

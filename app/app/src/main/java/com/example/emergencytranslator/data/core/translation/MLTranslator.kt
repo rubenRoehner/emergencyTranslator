@@ -11,8 +11,8 @@ import java.lang.Exception
 @Singleton
 class MLTranslator {
 
-    private var sourceLanguage: String? = null
-    private var targetLanguage: String? = null
+    var sourceLanguage: String? = null
+    var targetLanguage: String? = null
 
     private var translatorOptions: TranslatorOptions? = null
 

@@ -8,6 +8,8 @@ import com.example.emergencytranslator.data.core.translation.MLTranslator
 import com.example.emergencytranslator.data.core.tts.TTSModule
 import com.example.emergencytranslator.data.core.stt.VoiceToTextRecognizer
 import com.example.emergencytranslator.data.core.translation.MLTranslatorService
+import com.example.emergencytranslator.data.storage.daos.HistoryItemDao
+import com.example.emergencytranslator.data.storage.entities.HistoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class TranslatorViewModel @Inject constructor(
     private val mlTranslator: MLTranslator,
     private val voiceToTextRecognizer: VoiceToTextRecognizer,
-    private val ttsModule: TTSModule
+    private val ttsModule: TTSModule,
+    private val historyItemDao: HistoryItemDao
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(TranslatorUiState())
     val uiState: StateFlow<TranslatorUiState> = _uiState.asStateFlow()
@@ -51,23 +54,29 @@ class TranslatorViewModel @Inject constructor(
                 targetLanguage = availableLanguages.getOrNull(1)
             )
         }
-        availableLanguages.getOrNull(0)?.let { onSourceLanguageSelected(it) }
-        availableLanguages.getOrNull(1)?.let { onTargetLanguageSelected(it) }
+        availableLanguages.getOrNull(0)
+            ?.let { onSourceLanguageSelected(it, shouldStartTranslate = false) }
+        availableLanguages.getOrNull(1)
+            ?.let { onTargetLanguageSelected(it, shouldStartTranslate = false) }
     }
 
-    fun onSourceLanguageSelected(language: Locale) {
+    fun onSourceLanguageSelected(language: Locale, shouldStartTranslate: Boolean = true) {
         _uiState.update { it.copy(sourceLanguage = language) }
         if (_uiState.value.targetLanguage == language) {
             _uiState.update { it.copy(targetLanguage = null) }
         }
         mlTranslator.updateSourceLanguage(language.language)
-        startTranslate()
+        if (shouldStartTranslate) {
+            startTranslate()
+        }
     }
 
-    fun onTargetLanguageSelected(language: Locale) {
+    fun onTargetLanguageSelected(language: Locale, shouldStartTranslate: Boolean = true) {
         _uiState.update { it.copy(targetLanguage = language) }
         mlTranslator.updateTargetLanguage(language.language)
-        startTranslate()
+        if (shouldStartTranslate) {
+            startTranslate()
+        }
     }
 
     fun setInputText(text: String) {
@@ -111,11 +120,31 @@ class TranslatorViewModel @Inject constructor(
             val result = mlTranslator.translate(input)
             setIsTranslating(false)
             if (result.isNotEmpty()) {
+                saveToHistory(sourceText = input, targetText = result)
                 setOutputText(result)
             } else {
                 setHasError(Error.Translating)
             }
         }
+    }
+
+    private suspend fun saveToHistory(sourceText: String, targetText: String) {
+        val sourceLanguage = _uiState.value.sourceLanguage
+        val targetLanguage = _uiState.value.targetLanguage
+        if (sourceLanguage == null || targetLanguage == null) {
+            setHasError(Error.General)
+            return
+        }
+        historyItemDao.insert(
+            HistoryItem(
+                id = 0,
+                sourceLanguage = sourceLanguage.displayLanguage,
+                targetLanguage = targetLanguage.displayLanguage,
+                sourceText = sourceText,
+                targetText = targetText,
+                timestamp = System.currentTimeMillis()
+            )
+        )
     }
 
     fun startSpeaking() {
