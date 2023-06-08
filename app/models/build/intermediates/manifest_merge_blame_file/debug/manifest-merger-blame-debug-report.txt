@@ -3,6 +3,6 @@
 3    package="com.example.models" >
 4
 5    <uses-sdk android:minSdkVersion="21" />
-5-->F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest9755954892961114451.xml
+5-->F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
 6
 7</manifest>

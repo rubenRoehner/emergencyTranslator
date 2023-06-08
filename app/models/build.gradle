@@ -42,19 +42,48 @@ android {
 
 
 tasks.register('genUUID') {
+    def uuidDe = UUID.randomUUID().toString()
+    def odirDe = file("$buildDir/generated/assets/model-small-de")
+    def ofileDe = file("$odirDe/uuid")
+
     def uuidEn = UUID.randomUUID().toString()
     def odirEn = file("$buildDir/generated/assets/model-small-en")
     def ofileEn = file("$odirEn/uuid")
 
-    def uuidDe = UUID.randomUUID().toString()
-    def odirDe = file("$buildDir/generated/assets/model-small-de")
-    def ofileDe = file("$odirDe/uuid")
+    def uuidEs = UUID.randomUUID().toString()
+    def odirEs = file("$buildDir/generated/assets/model-small-es")
+    def ofileEs = file("$odirEs/uuid")
+
+    def uuidFr = UUID.randomUUID().toString()
+    def odirFr = file("$buildDir/generated/assets/model-small-es")
+    def ofileFr = file("$odirFr/uuid")
+
+    def uuidRu = UUID.randomUUID().toString()
+    def odirRu = file("$buildDir/generated/assets/model-small-es")
+    def ofileRu = file("$odirRu/uuid")
+
+    def uuidTr = UUID.randomUUID().toString()
+    def odirTr = file("$buildDir/generated/assets/model-small-es")
+    def ofileTr = file("$odirTr/uuid")
+
     doLast {
+        mkdir odirDe
+        ofileDe.text = uuidDe
+
         mkdir odirEn
         ofileEn.text = uuidEn
 
-        mkdir odirDe
-        ofileDe.text = uuidDe
+        mkdir odirEs
+        ofileEs.text = uuidEs
+
+        mkdir odirFr
+        ofileFr.text = uuidFr
+
+        mkdir odirRu
+        ofileRu.text = uuidRu
+
+        mkdir odirTr
+        ofileTr.text = uuidTr
     }
 }
 

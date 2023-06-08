@@ -74,6 +74,13 @@ private fun TranslatorContent(
         }
     }
 
+    LaunchedEffect(uiState.hasError) {
+        if (uiState.hasError != null) {
+            snackbarHostState.showSnackbar(context.resources.getString(uiState.hasError.message))
+            resetError()
+        }
+    }
+
     HandlePermissions(setCanRecord = setCanRecord)
 
     Scaffold(

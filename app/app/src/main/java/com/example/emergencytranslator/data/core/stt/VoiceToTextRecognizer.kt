@@ -17,6 +17,8 @@ import javax.inject.Singleton
 class VoiceToTextRecognizer(private val application: Application) :
     org.vosk.android.RecognitionListener {
 
+    private val supportedLanguages: Array<String> = arrayOf("de", "en", "es", "fr", "ru", "tr");
+
     private val _infos = MutableStateFlow(VoiceToTextRecognizerInfos())
     val infos: StateFlow<VoiceToTextRecognizerInfos>
         get() = _infos.asStateFlow()
@@ -29,9 +31,9 @@ class VoiceToTextRecognizer(private val application: Application) :
     private var currentLanguageCode = ""
     private var isModelInitialized = false
 
-    fun startListening(languageCode: String = "de") {
+    fun startListening() {
         if(!isModelInitialized){
-            initModel(languageCode)
+            updateLanguage(currentLanguageCode)
         }
 
         //TODO: Check if user has given permission to record audio, init the model after permission is granted
@@ -41,24 +43,38 @@ class VoiceToTextRecognizer(private val application: Application) :
         }
     }
 
-    fun initModel(languageCode: String = "de") {
-        if(currentLanguageCode == languageCode) return
+    fun updateLanguage(languageCode: String) : Boolean{
+        Log.i("updateLanguage received:", languageCode)
+        var isLanguageSupported : Boolean = true
+        var safeLanguageCode : String = languageCode
 
-        val sourcePath = "model-small-$languageCode"
+        if(safeLanguageCode == "") {
+            safeLanguageCode = "de"
+        }
+
+        if(currentLanguageCode == safeLanguageCode) return true
+        if(safeLanguageCode !in supportedLanguages) {
+            isLanguageSupported = false
+            safeLanguageCode = "de"
+        }
+
+        val sourcePath = "model-small-$safeLanguageCode"
 
         StorageService.unpack(application, sourcePath, "model",
             { model ->
                 this.model = model
                 this.isModelInitialized = true
-                currentLanguageCode = languageCode
+                currentLanguageCode = safeLanguageCode
 
                 updateState(VoiceToTextRecognizerState.STATE_READY)
             }
         ) { exception ->
-            updateState(VoiceToTextRecognizerState.STATE_DONE)
-            Log.e("VoiceToTextRecognizer", exception.message.toString())
+            this.isModelInitialized = false
             updateError(exception.message.toString())
+            updateState(VoiceToTextRecognizerState.STATE_DONE)
         }
+
+        return isLanguageSupported
     }
 
     fun stopListening(){
@@ -83,24 +99,17 @@ class VoiceToTextRecognizer(private val application: Application) :
         }
     }
 
-    override fun onPartialResult(hypothesis: String?) {
-        Log.i("onPartialResult", hypothesis + "\n")
-    }
+    override fun onPartialResult(hypothesis: String?) {}
 
     override fun onResult(hypothesis: String?) {
         if (hypothesis != null) {
             updateText(hypothesis)
         }
         updateState(VoiceToTextRecognizerState.STATE_DONE)
-        Log.i("onResult", hypothesis + "\n")
     }
 
     override fun onFinalResult(hypothesis: String?) {
-        if (hypothesis != null) {
-            //updateText(hypothesis)
-        }
         updateState(VoiceToTextRecognizerState.STATE_DONE)
-        Log.i("onFinalResult", hypothesis + "\n")
     }
 
     override fun onError(exception: Exception?) {
@@ -133,6 +142,8 @@ class VoiceToTextRecognizer(private val application: Application) :
                 spokenText = extractedText
             )
         }
+
+        Log.i("updateText", "Updated Text to:$extractedText")
     }
 
     private fun updateState(newState: VoiceToTextRecognizerState){
