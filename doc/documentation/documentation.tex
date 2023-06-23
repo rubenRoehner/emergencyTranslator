@@ -7,12 +7,26 @@
 \usepackage{wrapfig}
 \usepackage{float}
 \usepackage{titlesec}
+\usepackage{caption}
 % Set page size and margins
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 % Useful packages
 \usepackage{amsmath}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{hyperref}
+
+\usepackage{parskip}
+
+\usepackage{url}
+\usepackage[numbers]{natbib}
+
+
+% remove indent
+\setlength{\parindent}{0pt}
+
+\usepackage{setspace}
+\onehalfspacing
+
 
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
@@ -23,15 +37,15 @@
 
 \begin{document}
     \include{pages/titlePage}
-    \include{pages/workInProgress}
     \include{pages/abstract}
     \include{pages/independence}
     \include{pages/tableOfContents}
-        \include{pages/introduction}
-        \include{pages/requirements}
-        \include{pages/stateOfTheArt}
-        \include{pages/implementation}
-        \include{pages/evaluation}
-        \include{pages/conclusion}
+    \include{pages/introduction}
+    \include{pages/requirements}
+    \include{pages/stateOfTheArt}
+    \include{pages/implementation}
+    \include{pages/evaluation}
+    \include{pages/conclusion}
+    \include{pages/references}
     \listoffigures
 \end{document}

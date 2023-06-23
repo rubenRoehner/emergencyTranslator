@@ -2,29 +2,40 @@
 \section{Anforderungen}\label{sec:requirements}
 
 \subsection{Must-Have}
-Folgende Aspekte müssen schlussendlich in der App implementiert sein:
-\begin{itemize}
-    \item Die Eingabe des zu übersetzenden Texte durch Spracheingabe, welche auch ohne funktionierende Internetverbindung, die Sprache zu Text umwandelt.
-    \item Die Übersetzung des eingegebenen Textes mit einer Bibliothek, welche auch ohne bestehende Internetverbindung den Text übersetzt.
-    \item     Die Speicherung des Sprachverlaufs: Zuvor eingesprochene Texte sollen mit
-ihrer Übersetzung gespeichert werden, damit diese zu einem späteren
-Zeitpunkt weiterhin abrufbar sind.
-    \item Die Ausgabe des übersetzten Textes auf dem Display.
-\end{itemize}
+Die folgenden Aspekte müssen letztendlich in der Anwendung implementiert werden und stellen die Kernfunktionalität der Anwendung dar. Ohne diese Funktionen ist die Anwendung nicht funktionsfähig und sollten daher von Anfang an implementiert sein. 
+
+\subsubsection{Offline Übersetzung}
+Die Übersetzung des eingegebenen Textes mit einer Bibliothek, die den Text auch ohne bestehende Internetverbindung übersetzt. In Notsituationen kann es vorkommen, dass keine Internetverbindung hergestellt werden kann. Aus diesem Grund muss die Übersetzung auch offline funktionieren.
+
+\subsubsection{Spracheingabe}
+Die Eingabe des zu übersetzenden Textes per Spracheingabe, die auch ohne funktionierende Internetverbindung Sprache in Text umwandelt. Dieses Feature soll die Bedienung der App deutlich vereinfachen, da die App für Notsituationen konzipiert ist und die Texteingabe dadurch deutlich schneller erfolgen kann. 
+
+\subsubsection{Sprachhistorie}
+In Notsituationen ist es oft wichtig, die gewonnenen Erkenntnisse nochmals zu überprüfen. Aus diesem Grund soll in der Anwendung eine Historie angezeigt werden. Zuvor eingegebene Texte sollen mit ihrer Übersetzung gespeichert werden, so dass sie zu einem späteren Zeitpunkt wieder aufgerufen werden können.
+
+\subsubsection{Textausgabe}
+Damit der Benutzer die Übersetzung sehen kann, wird sie zunächst als Text auf dem Bildschirm angezeigt.
 
 \subsection{Should-Have}
-Folgende Aspekte sollten schlussendlich in der App implementiert sein:
-\begin{itemize}
-    \item Dies Ausgabe des übersetzten Textes in Form einer Sprachausgabe, welche auch ohne funktionierende Internetverbindung, den Text zu Sprache umwandelt.
-    \item Das Übersetzen des Textes mithilfe eines neuronalen Netzes, wie zum Beispiel
-GPT-JT oder GPT J-6B, welches auf einem lokalen Server ausgeführt wird.
-\end{itemize}
+Should-Have-Funktionen sind Erweiterungen, die die Benutzererfahrung verbessern und zusätzliche Funktionen bieten. Sie sind nicht zwingend erforderlich, werden aber empfohlen, um die Anwendung funktioneller und komfortabler zu machen. Sie stellen einen echten Mehrwert für den Benutzer dar.
+
+\subsubsection{Sprachausgabe}
+Die Ausgabe des übersetzten Textes in gesprochener Form stellt für den Nutzer einen echten Mehrwert dar. Dadurch wird die Kommunikation mit Hilfe dieser Anwendung für beide Gesprächspartner deutlich flüssiger und angenehmer.
+
+\subsubsection{Übersetzung durch ein neuronales Netz}
+Durch die Implementierung eines lokal gehosteten neuronalen Netzes wie GPT-JT oder GPT J-6B soll die Qualität der Übersetzungen verbessert werden. Inwieweit sich die Übersetzungsqualität und die Übersetzungsgeschwindigkeit ändern, muss durch nachfolgende Tests ermittelt werden.
 
 \subsection{Could-Have}
-Folgende Aspekte können schlussendlich in der App implementiert sein:
-\begin{itemize}
-    \item Bei einer bestehenden Internetverbindung kann zusätzlich ausgewählt werden, dass ChatGPT oder DeepL zur Übersetzung des Textes verwendet wird.
-\item Die nachträgliche Aufbereitung des Textes durch DeepL Write oder ChatGPT, sobald eine Internetverbindung besteht.
-\item App-Einstellungen zum Auswählen der Sprachen, eines Darkmodes oder ähnlichen Optionen.
-\item Die Ausgabe der Übersetzungen in Form einer Datei (z.B. PDF)
-\end{itemize}
+Die Aspekte der Kategorie Could-Have stellen Funktionen der Anwendung dar, die am Ende der Implementierungsphase entwickelt werden können, wenn genügend Zeit zur Verfügung steht. Diese Funktionen dienen der Verbesserung der Benutzererfahrung, werden aber nicht als notwendig erachtet. Sie stellen zusätzliche Optionen und Erweiterungen dar, die das Potenzial haben, die Anwendung funktioneller und vielseitiger zu machen.
+
+\subsubsection{App-Einstellungen}
+Die Implementierung eines eigenen Bereichs zur Individualisierung der App. In den App-Einstellungen soll der Nutzer weitere Sprachpakete für Spracherkennung, Übersetzung und Sprachausgabe herunterladen können. Außerdem soll hier die Darstellung der App angepasst werden, so dass der Nutzer zwischen einer hellen und einer dunklen Ansicht der App wechseln kann. 
+
+\subsubsection{Verbesserte Online-Übersetzung}
+Die lokale Übersetzung auf dem Gerät ist unerlässlich, wenn keine aktive Internetverbindung besteht. Hat der Benutzer aber Internetzugang, sollte bei der Übersetzung auf einen Online-Dienst wie zum Beispiel DeepL oder ChatGPT zurückgegriffen werden können, um die Qualität der Übersetzung zu erhöhen.
+
+\subsubsection{Aufbereitung der Übersetzung}
+Diese Funktion ähnelt der oben genannten. Hier soll der Benutzer jedoch die Möglichkeit haben, die übersetzten Texte von einem Online-Dienst nachübersetzen zu lassen, um die Qualität der Übersetzung zu verbessern. 
+
+\subsubsection{Export der Übersetzungen}
+In manchen Notfallsituationen ist ein Gesprächsprotokoll ein hilfreiches Mittel, um die Notfallsituation im Nachhinein nochmals analysieren zu können, um aus möglichen Fehlern für die Zukunft zu lernen. Aus diesem Grund soll der Benutzer die Möglichkeit haben, seine Sprachhistorie als Datei im PDF-Format o.ä. zu exportieren.

@@ -1,11 +1,18 @@
 \newpage
-\section{Evaluation der Implementierung (WIP)}\label{sec:evaluation}
+\section{Evaluation der Implementierung}\label{sec:evaluation}
 
-\subsection{Grafische Bedienoberfläche (WIP)}
-\textit{Diskutieren, wie die Bedienoberfläche von Testern genutzt worden ist und ob sie ihren Zweck gut erfüllt.}
+\subsection{Grafische Bedienoberfläche}
+Bei den Tests mit unserer grafischen Benutzeroberfläche gab es bei den Testern so gut wie keine Unklarheiten. Vor allem die Grundfunktion der Übersetzung wurde sehr schnell verstanden. Der einzige Fall, in dem etwas unklar war, war, dass man in der Historie die jeweiligen Einträge aufklappen muss, um die Übersetzung zu sehen, was aber nur bei einem Tester vorkam. 
 
-\subsection{Qualität der Sprachein- und Ausgabe (WIP)}
-\textit{Diskutieren, wie die Qualität der Sprachein- und Ausgabe ist. Was sind die unterschiedlichen Charakteristiken im Offline- und Onlinemodus? Hat der Onlinemodus einen Mehrwert oder hätte der Offlinemodus genügt?}
+\subsection{Qualität der Sprachein- und Ausgabe}
+\subsubsection{Spracheingabe}
+Mit dem Android SpeechRecognizer war die Qualität und Performance der Spracheingabe zunächst sehr gut. Da der SpeechRecognizer oder Modelle mit ähnlicher Qualität jedoch nicht offline verfügbar sind, mussten wir auf Vosk umsteigen. 
 
-\subsection{Gebrauch im Anwendungsumfeld (WIP)}
-\textit{Diskutieren, ob die App im Anwendungsumfeld, heißt einem potenziellen Notfall, eingesetzt werden kann. Hat sie einen Mehrwert gegenüber herkömmlichen Übersetzern? Kommt es zu Komplikationen?}
+Die qualitativen Unterschiede zwischen Vosk und dem SpeechRecognizer sind leicht zu erkennen. Während der SpeechRecognizer meist natürliche Sprache erkennt, schleichen sich bei Vosk schnell Fehler ein, wenn nicht sehr deutlich gesprochen wird. Man kann hier also von einer deutlichen Verschlechterung der Qualität sprechen.
+
+Man könnte die Qualität von Vosk wieder auf das Niveau serverbasierter Systeme anheben, indem man die mitgelieferten größeren Module verwendet. Diese benötigen jedoch deutlich mehr Rechenleistung als ein durchschnittliches Smartphone und sind daher nur für eine eventuelle Implementierung auf PCs sinnvoll.
+
+Außerdem müssen die jeweiligen Sprachmodule für Vosk manuell heruntergeladen und integriert werden. Daher können wir dem Benutzer nicht die Möglichkeit geben, die Sprachmodule selbst herunterzuladen oder zu verwalten, was zu einem erhöhten Speicherverbrauch führt.
+
+\subsubsection{Sprachausgabe}
+Die TextToSpeech-Bibliothek von Android gibt den übersetzten Text in klarer Sprache aus und ist daher für dieses Projekt ausreichend. Da die Sprachausgabe auch offline verfügbar sein soll, konnten wir keine neueren Modelle verwenden, die eine realistische Stimme imitieren.

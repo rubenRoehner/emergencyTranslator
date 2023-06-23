@@ -1,18 +1,32 @@
 \newpage
-\section{Technologien (WIP)}\label{sec:stateOfTheArt}
-In folgendem Abschnitt werden die genutzten Technologien aufgelistet, sowie ihre Vor- und Nachteile in Bezug zu unserem Projekt diskutiert.
-\subsection{Sprachein- und Ausgabe (WIP)}
+\section{Technologien}\label{sec:stateOfTheArt}
+Im Folgenden werden die verwendeten Technologien für die drei wichtigsten Komponenten der Anwendung - Spracheingabe, Übersetzung und Sprachausgabe - aufgelistet.
 
-\subsubsection{Android - SpeechRecognizer (WIP)}
-Der Android SpeechRecognizer ermöglicht es uns Texte per Spracheingabe aufzunehmen.
+\subsection{Spracheingabe}
+Für die Spracheingabe wurden zwei verschiedene Bibliotheken getestet. Zunächst wurde mit dem Android SpeechRecognizer gearbeitet, später wurde auf Vosk umgestellt.
 
-\subsubsection{Android - TextToSpeech (WIP)}
-Android TextToSpeech ermöglicht es uns Texte per Sprachausgabe wiederzugeben.
+\subsubsection{Android - SpeechRecognizer}
+Mit dem Android SpeechRecognizer kann Sprache in Text umgewandelt werden. Dazu kann dem SpeechRecognizer eine Audiodatei übergeben werden oder der SpeechRecognizer kann direkt den in das Mikrofon gesprochenen Text verarbeiten. Der SpeechRecognizer kann die Sprache automatisch erkennen, es kann aber auch ein Parameter übergeben werden, der angibt, in welcher Sprache die Sprachaufnahme vorliegt. Der SpeechRecognizer kann lokal auf dem Gerät ausgeführt werden, wofür zuvor die entsprechenden Modelle heruntergeladen werden müssen. Alternativ kann auch eine Online-Transkription verwendet werden, bei der der Text auf einem Server transkribiert wird \cite{androidSpeechRecognizer}.
 
-\subsection{Übersetzung (WIP)}
+\subsubsection{Vosk}
+Vosk ist ein Open Source Spracherkennungs-Toolkit. Vosk unterstützt mehr als 20 Sprachen und wird offline verwendet. Das Vosk-Projekt stellt Toolkits für verschiedene Plattformen zur Verfügung. Vosk bietet eine Reihe verschiedener KI-Modelle für die Spracherkennung. Dabei wird zwischen kleinen und großen Modellen unterschieden. Die kleinen Modelle sind für den lokalen Einsatz auf Smartphones, Raspberry Pi's und Desktop PCs gedacht. Die großen Modelle hingegen werden auf Servern mit deutlich höherer Rechenleistung empfohlen, da diese Modelle deutlich komplexere KI-Algorithmen verwenden. Darüber hinaus besteht die Möglichkeit, KI-Modelle von Drittanbietern zu verwenden oder eigene Modelle mit dem Kaldi Toolkit zu erstellen \cite{vosk}. 
+
+\subsection{Übersetzung}
+Für die Übersetzung des eingegebenen Textes wurden zwei Bibliotheken evaluiert. Nur der Google ML Kit Übersetzer wurde aktiv verwendet. Der DeepL Übersetzer wurde nur für eine geplante Erweiterung in Betracht gezogen.
 
 \subsubsection{Google ML Kit - Übersetzer}
-Das ML Kit von dem wir den Übersetzer benutzen ist ein von Google entwickeltes Software Development Kit. Es ermöglicht uns Übersetzungsfunktionen mit maschinellen Lernen in unsere App zu integrieren. Es bietet eine benutzerfreundliche Schnittstelle und ist für mobile Anwendungen optimiert.
+Das Google ML Kit bietet Entwicklern die Möglichkeit, maschinelles Lernen in ihren Anwendungen auf mobilen Geräten für Android und iOS zu nutzen. Dazu stellt das ML Kit mehrere Machine-Learning-Modelle zur Verfügung, die verschiedene Anwendungsfälle wie Gesichtserkennung oder Objekttracking abdecken. Diese Modelle sind für den Einsatz auf mobilen Geräten optimiert und können somit auch in Echtzeitanwendungen eingesetzt werden. Zusätzlich zu den 13 von Google trainierten Modellen bietet das ML Kit die Möglichkeit, eigene Tensorflow lite Modelle auf dem Gerät auszuführen \cite{mlKit}.
 
-\subsubsection{DeepL - Übersetzer}
-Der DeepL Übersetzer ist ein Übersetzungstool auf das hauptsächlich über die zugehörige Website bzw. Anwendung benutzt wird. Wir nutzen DeepL in unserem Projekt als sekundäre Übersetzung, sobald eine Internetverbindung besteht, da dieser Übersetzer nicht offline genutzt werden kann. Aber somit können wir bei bestehender Verbindung eine sehr gute Übersetzung sicherstellen und schon übersetzte Texte rückwirkend auf Fehler überprüfen.
+Wir verwenden das ML Kit SDK in unserer App, um Texte zu übersetzen. Für dieses Problem gibt es ein eigenes ML-Modell, das über eine API direkt angesprochen werden kann. Dieses Modell unterstützt über 50 verschiedene Sprachen für die Übersetzung und kann sowohl online als auch offline verwendet werden. Die benötigten Sprachpakete können einfach über die API heruntergeladen werden und sind somit auch ohne aktive Internetverbindung nutzbar. Das Modell ist auf die Übersetzung von und nach Englisch trainiert, d.h. bei anderen Sprachen wird der Text immer zuerst ins Englische und dann in die gewünschte Zielsprache übersetzt \cite{mlKitTranslation}.
+
+
+\subsubsection{DeepL Übersetzer}
+Um unseren App-Nutzern eine verbesserte Übersetzungsqualität zu bieten, planen wir, bei einer aktiven Internetverbindung den DeepL Übersetzer einzusetzen. Zusätzlich wollen wir den Benutzern die Möglichkeit geben, bereits übersetzte Texte nachträglich erneut mit dem DeepL Übersetzer zu übersetzen, um die Qualität weiter zu verbessern. Der DeepL Translator basiert auf neuronalen Netzen und gilt als einer der besten maschinellen Übersetzer auf dem Markt. Er verspricht eine sehr hohe Genauigkeit, die laut Vergleichsstudien sogar fünf- bis sechsmal höher ist als die seiner Konkurrenten \cite{deepl}.
+
+Der DeepL Übersetzer ist über die eigene Website sowie über eigene Programme verfügbar. Darüber hinaus bietet DeepL eine API-Schnittstelle, die es ermöglicht, den Übersetzer auch in andere Anwendungen zu integrieren. Mit Hilfe von HTTP-Requests können Texte oder Textdateien an die DeepL API-Endpunkte gesendet werden, um sie zu übersetzen. Anschließend wird die übersetzte Version zurückgeschickt. Die DeepL API kann entweder über einen kostenlosen, jedoch eingeschränkten Zugriff oder über eine kostenpflichtige Variante mit uneingeschränktem Zugriff genutzt werden. Dabei unterstützt DeepL insgesamt 29 verschiedene Sprachen  \cite{deeplDocs}.
+
+\subsection{Sprachausgabe}
+Für die Sprachausgabe haben wir nur eine Bibliothek in Betracht gezogen. Da die Sprachausgabe für uns nur eine Should-Have-Priorität hat, haben wir die TextToSpeech-Bibliothek von Android dauerhaft verwendet. Da diese auch offline verfügbar ist und eine gute Qualität bietet, wäre es schwierig, diese zu übertreffen.
+
+\subsubsection{Android - TextToSpeech}
+Android bietet mit seiner TextToSpeech-Bibliothek eine einfache Möglichkeit, Text in Sprache umzuwandeln. Die Bibliothek ist vollständig offline verfügbar und bietet eine mittlere bis gute Qualität, die natürlich nicht mit modernen serverbasierten Modellen vergleichbar ist \cite{androidTTS}.
