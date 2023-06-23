@@ -11,6 +11,7 @@ import com.example.emergencytranslator.data.core.stt.VoiceToTextRecognizer
 import com.example.emergencytranslator.data.core.translation.MLTranslatorService
 import com.example.emergencytranslator.data.storage.daos.HistoryItemDao
 import com.example.emergencytranslator.data.storage.entities.HistoryItem
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +36,12 @@ class TranslatorViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             initLanguages()
-            voiceToTextRecognizer.initModel()
+            if(uiState.value.sourceLanguage != null){
+                voiceToTextRecognizer.updateLanguage(uiState.value.sourceLanguage!!.language)
+            } else {
+                voiceToTextRecognizer.updateLanguage("")
+            }
+
 
             voiceToTextRecognizer.infos.collect { infos ->
                 if (infos.spokenText.isNotEmpty()) {
@@ -65,6 +71,12 @@ class TranslatorViewModel @Inject constructor(
 
     fun onSourceLanguageSelected(language: Locale, shouldStartTranslate: Boolean = true) {
         _uiState.update { it.copy(sourceLanguage = language) }
+        val didSetLanguage: Boolean = voiceToTextRecognizer.updateLanguage(language.language);
+
+        if(!didSetLanguage){
+            setHasError(Error.Language)
+        }
+
         if (_uiState.value.targetLanguage == language) {
             _uiState.update { it.copy(targetLanguage = null) }
         }
@@ -170,7 +182,8 @@ class TranslatorViewModel @Inject constructor(
         General(R.string.error_general), Translating(R.string.error_translating), AudioPermission(
             R.string.error_audio_permission
         ),
-        Transcribing(R.string.error_transcribing)
+        Transcribing(R.string.error_transcribing),
+        Language(R.string.error_languageNotFound)
     }
 }
 

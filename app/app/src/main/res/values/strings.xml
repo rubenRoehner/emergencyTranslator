@@ -42,5 +42,6 @@
     <string name="error_translating">An error occurred while translating!</string>
     <string name="error_audio_permission">Audio permission needs to be granted in order to transcribe</string>
     <string name="error_transcribing">An error occurred while transcribing!</string>
+    <string name="error_languageNotFound">The selected language has not matching transcribing module!</string>
     <string name="error_deleting">An error occurred while deleting!</string>
 </resources>
