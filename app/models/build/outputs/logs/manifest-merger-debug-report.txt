@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml:2:13-83
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml:2:13-83
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml:2:13-83
+ADDED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml:2:13-83
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml:2:13-83
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml:2:13-83
 	package
-		INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-		ADDED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml:2:13-83
-		INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
+		INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+		ADDED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml:2:13-83
+		INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
 	xmlns:android
-		ADDED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml:2:23-81
+		ADDED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml:2:23-81
 uses-sdk
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml reason: use-sdk injection requested
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml reason: use-sdk injection requested
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
 	android:targetSdkVersion
-		INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-		ADDED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-		INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
+		INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+		ADDED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+		INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
 	android:minSdkVersion
-		INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-		ADDED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
-		INJECTED from F:\Dateien\Studium\uebersetzerapp\app\models\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest7812883708469820205.xml
+		INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+		ADDED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml
+		INJECTED from /Users/rubenrohner/dev/uni/Semester-8/SystemAdministration/uebersetzerapp/app/models/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest13683060710069779257.xml

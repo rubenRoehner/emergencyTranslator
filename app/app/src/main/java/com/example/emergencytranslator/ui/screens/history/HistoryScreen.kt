@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.emergencytranslator.R
 import com.example.emergencytranslator.data.storage.entities.HistoryItem
@@ -151,7 +152,9 @@ private fun HistoryEmpty() {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(id = R.string.history_empty),
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
     }
 }
